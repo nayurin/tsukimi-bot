@@ -39,12 +39,12 @@ export class Context {
               member,
               ctxitem: this.members[member.uid]
             })
-          } else {
-            this.members[member.uid].live.roomId = roomStatusInfo.data[member.uid].room_id
-            this.members[member.uid].live.onAir = Boolean(roomStatusInfo.data[member.uid].live_status)
-            this.members[member.uid].live.title = roomStatusInfo.data[member.uid].title
-            this.members[member.uid].uname = roomStatusInfo.data[member.uid].uname
           }
+          
+          this.members[member.uid].live.roomId = roomStatusInfo.data[member.uid].room_id
+          this.members[member.uid].live.onAir = Boolean(roomStatusInfo.data[member.uid].live_status)
+          this.members[member.uid].live.title = roomStatusInfo.data[member.uid].title
+          this.members[member.uid].uname = roomStatusInfo.data[member.uid].uname
         } else {
           this.members[member.uid] = contextItemFactory({
             live: {

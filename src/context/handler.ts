@@ -17,10 +17,8 @@ export async function onLiveStart ({
   ctxitem: IContextItem
 }) {
   const message = `
-  ❤❤❤ 
-  ${ctxitem.uname} 正在直播: ${ctxitem.live.title}
-  ❤❤❤
-
+  🎶 ${ctxitem.uname} 正在直播: ${ctxitem.live.title}
+  
   https://live.bilibili.com/${ctxitem.live.roomId}
   `
   console.log(message)
@@ -35,9 +33,7 @@ export async function onDynaPost ({
   ctxitem: IContextItem
 }) {
   const message = `
-  ❤❤❤
-  ${ctxitem.uname} 发布了新动态
-  ❤❤❤
+  ♥ ${ctxitem.uname} 发布了新动态
 
   https://t.bilibili.com/${ctxitem.recentDynaId}
   `
