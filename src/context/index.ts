@@ -43,7 +43,7 @@ export class Context {
           }
 
           this.members[member.uid].live.roomId = roomStatusInfo.data[member.uid].room_id
-          this.members[member.uid].live.onAir = Boolean(roomStatusInfo.data[member.uid].live_status)
+          this.members[member.uid].live.onAir = roomStatusInfo.data[member.uid].live_status === 1
           this.members[member.uid].live.title = roomStatusInfo.data[member.uid].title
           this.members[member.uid].live.cover = roomStatusInfo.data[member.uid].cover_from_user
           this.members[member.uid].uname = roomStatusInfo.data[member.uid].uname

@@ -19,7 +19,7 @@ export async function onLiveStart ({
   const message = `
   [CQ:image,file=${ctxitem.live.cover}]
 
-  ᐅ ${ctxitem.uname} 正在直播:
+  ᐅ ${ctxitem.uname} 正在直播
   ᐅ ${ctxitem.live.title}
   
   https://live.bilibili.com/${ctxitem.live.roomId}
