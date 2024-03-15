@@ -10,7 +10,8 @@ const contextItemFactory = (item: Partial<IContextItem>): IContextItem => {
     live: {
       roomId: item.live?.roomId ?? 0,
       onAir: item.live?.onAir ?? false,
-      title: item.live?.title ?? ''
+      title: item.live?.title ?? '',
+      cover: ''
     },
     recentDynaId: item.recentDynaId ?? 0
   }
@@ -40,17 +41,19 @@ export class Context {
               ctxitem: this.members[member.uid]
             })
           }
-          
+
           this.members[member.uid].live.roomId = roomStatusInfo.data[member.uid].room_id
           this.members[member.uid].live.onAir = Boolean(roomStatusInfo.data[member.uid].live_status)
           this.members[member.uid].live.title = roomStatusInfo.data[member.uid].title
+          this.members[member.uid].live.cover = roomStatusInfo.data[member.uid].cover_from_user
           this.members[member.uid].uname = roomStatusInfo.data[member.uid].uname
         } else {
           this.members[member.uid] = contextItemFactory({
             live: {
               roomId: roomStatusInfo.data[member.uid].room_id,
               onAir: Boolean(roomStatusInfo.data[member.uid].live_status),
-              title: roomStatusInfo.data[member.uid].title
+              title: roomStatusInfo.data[member.uid].title,
+              cover: roomStatusInfo.data[member.uid].cover_from_user
             },
             uname: roomStatusInfo.data[member.uid].uname
           })

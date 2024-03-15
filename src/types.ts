@@ -19,6 +19,7 @@ export interface IContextItem {
     onAir: boolean
     roomId: number
     title: string
+    cover: string
   }
   recentDynaId: number
 }

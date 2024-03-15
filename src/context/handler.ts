@@ -17,7 +17,9 @@ export async function onLiveStart ({
   ctxitem: IContextItem
 }) {
   const message = `
-  🎶 ${ctxitem.uname} 正在直播: ${ctxitem.live.title}
+  [CQ:image,file=${ctxitem.live.cover}]
+
+  ♪ ${ctxitem.uname} 正在直播: ${ctxitem.live.title}
   
   https://live.bilibili.com/${ctxitem.live.roomId}
   `
