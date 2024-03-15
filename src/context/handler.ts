@@ -23,7 +23,6 @@ export async function onLiveStart ({
   
   https://live.bilibili.com/${ctxitem.live.roomId}
   `
-  console.log(message)
   sendGroupMsg(member.groups, message)
 }
 
@@ -39,6 +38,36 @@ export async function onDynaPost ({
 
   https://t.bilibili.com/${ctxitem.recentDynaId}
   `
-  console.log(message)
+  sendGroupMsg(member.groups, message)
+}
+
+export async function onVideoPost ({
+  aid,
+  member,
+  ctxitem
+}: {
+  aid: string | number,
+  member: IMember,
+  ctxitem: IContextItem
+}) {
+  const params = Object.entries({
+    build: '6060600',
+    buvid: '0',
+    oid: String(aid),
+    platform: 'android',
+    share_channel: 'QQ',
+    share_id: 'main.ugc-video-detail.0.0.pv',
+    share_mode: '7',
+  }).reduce((t, v) => (t.append(v[0], v[1]), t), new URLSearchParams())
+
+  const shareInfo = (await $http.post('https://api.biliapi.net/x/share/click', params)).data
+
+  const message = `
+  [CQ:image,file=${shareInfo.data.picture}]
+
+  ♥ ${ctxitem.uname} 发布了新投稿 ${shareInfo.data.title}
+
+  ${shareInfo.data.link}
+  `
   sendGroupMsg(member.groups, message)
 }

@@ -2,7 +2,7 @@ import { IMember, IContextItem } from '../types'
 import { getRoomStatusInfoByUids } from '../bilireq/live'
 import { getSpaceHistory } from '../bilireq/space'
 import { getUserInfo } from '../bilireq/user'
-import { onLiveStart, onDynaPost } from './handler'
+import { onLiveStart, onDynaPost, onVideoPost } from './handler'
 
 const contextItemFactory = (item: Partial<IContextItem>): IContextItem => {
   return {
@@ -77,10 +77,19 @@ export class Context {
             : recentDynamics.data.cards[0].desc.dynamic_id
 
           if (this.members[member.uid].recentDynaId !== 0 && this.members[member.uid].recentDynaId < recentId) {
-            onDynaPost({
-              member,
-              ctxitem: this.members[member.uid]
-            })
+            if (recentDynamics.data.desc?.bvid) {
+              const aid = JSON.parse(recentDynamics.data.cards)?.aid
+              onVideoPost({
+                aid,
+                member,
+                ctxitem: this.members[member.uid]
+              })
+            } else {
+              onDynaPost({
+                member,
+                ctxitem: this.members[member.uid]
+              })
+            }
           }
 
           this.members[member.uid].recentDynaId = recentId
