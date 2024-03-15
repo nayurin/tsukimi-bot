@@ -24,6 +24,7 @@ export async function onLiveStart ({
   https://live.bilibili.com/${ctxitem.live.roomId}
   `
   sendGroupMsg(member.groups, message)
+  console.log(`[${new Date().toLocaleString()}] 发送了消息\n${message}`)
 }
 
 export async function onDynaPost ({
@@ -39,6 +40,7 @@ export async function onDynaPost ({
   https://t.bilibili.com/${ctxitem.recentDynaId}
   `
   sendGroupMsg(member.groups, message)
+  console.log(`[${new Date().toLocaleString()}] 发送了消息\n${message}`)
 }
 
 export async function onVideoPost ({
@@ -70,4 +72,5 @@ export async function onVideoPost ({
   ${shareInfo.data.link}
   `
   sendGroupMsg(member.groups, message)
+  console.log(`[${new Date().toLocaleString()}] 发送了消息\n${message}`)
 }
