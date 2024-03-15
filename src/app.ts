@@ -21,11 +21,13 @@ const env: Env = loadConfig('.env')
     const members: IMember[] = loadConfig('./member.yml')
     
     await context.syncLiveStatus(members)
-    console.log(`live synced at ${new Date().toLocaleString()}`)
+    console.log(`\n[${new Date().toLocaleString()}] live synced`)
     
     await context.syncDynamicId(members)
-    console.log(`dynamic synced at ${new Date().toLocaleString()}`)
+    console.log(`[${new Date().toLocaleString()}] dynamic synced`)
     
+    console.log(inspect(context, false, 100, false))
+
     await asyncTimeout(env.interval.request * 1000)
   }
 })()
