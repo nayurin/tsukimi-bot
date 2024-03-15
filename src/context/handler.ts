@@ -19,7 +19,8 @@ export async function onLiveStart ({
   const message = `
   [CQ:image,file=${ctxitem.live.cover}]
 
-  ♪ ${ctxitem.uname} 正在直播: ${ctxitem.live.title}
+  ᐅ ${ctxitem.uname} 正在直播:
+  ᐅ ${ctxitem.live.title}
   
   https://live.bilibili.com/${ctxitem.live.roomId}
   `
@@ -67,7 +68,8 @@ export async function onVideoPost ({
   const message = `
   [CQ:image,file=${shareInfo.data.picture}]
 
-  ♥ ${ctxitem.uname} 发布了新投稿 ${shareInfo.data.title}
+  ♪ ${ctxitem.uname} 发布了新投稿
+  ♪ ${shareInfo.data.title}
 
   ${shareInfo.data.link}
   `
