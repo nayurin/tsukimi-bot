@@ -82,11 +82,12 @@ export class Context {
             })
           }
 
-          if (BigInt(this.members[member.uid].recentDynaId) < BigInt(recentId)) {
+          if (this.members[member.uid].recentDynaId !== '0' && BigInt(this.members[member.uid].recentDynaId) < BigInt(recentId)) {
             this.members[member.uid].recentDynaId = recentId
+            const recentDynamic = recentDynamics.data.cards.find(c => c.desc.dynamic_id_str === recentId)
 
-            if (recentDynamics.data.desc?.bvid) {
-              const aid = JSON.parse(recentDynamics.data.cards)?.aid
+            if (recentDynamic?.desc.bvid) {
+              const aid = JSON.parse(recentDynamic.card)?.aid
               onVideoPost({
                 aid,
                 member,
