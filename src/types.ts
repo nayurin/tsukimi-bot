@@ -21,5 +21,5 @@ export interface IContextItem {
     title: string
     cover: string
   }
-  recentDynaId: number
+  recentDynaId: string
 }

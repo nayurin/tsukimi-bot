@@ -13,7 +13,7 @@ const contextItemFactory = (item: Partial<IContextItem>): IContextItem => {
       title: item.live?.title ?? '',
       cover: ''
     },
-    recentDynaId: item.recentDynaId ?? 0
+    recentDynaId: item.recentDynaId ?? '0'
   }
 }
 
@@ -71,10 +71,10 @@ export class Context {
       if (recentDynamics.data.cards?.length) {
         if (this.members[member.uid]) {
           const recentId = recentDynamics.data.cards[1]?.desc
-            ? recentDynamics.data.cards[1].desc.dynamic_id - recentDynamics.data.cards[0].desc.dynamic_id > 0
-              ? recentDynamics.data.cards[1].desc.dynamic_id
-              : recentDynamics.data.cards[0].desc.dynamic_id
-            : recentDynamics.data.cards[0].desc.dynamic_id
+            ? BigInt(recentDynamics.data.cards[1].desc.dynamic_id_str) - BigInt(recentDynamics.data.cards[0].desc.dynamic_id_str) > 0
+              ? recentDynamics.data.cards[1].desc.dynamic_id_str
+              : recentDynamics.data.cards[0].desc.dynamic_id_str
+            : recentDynamics.data.cards[0].desc.dynamic_id_str
 
           if (!this.members[member.uid]) {
             this.members[member.uid] = contextItemFactory({
@@ -82,7 +82,7 @@ export class Context {
             })
           }
 
-          if (this.members[member.uid].recentDynaId < recentId) {
+          if (BigInt(this.members[member.uid].recentDynaId) < BigInt(recentId)) {
             this.members[member.uid].recentDynaId = recentId
 
             if (recentDynamics.data.desc?.bvid) {
