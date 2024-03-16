@@ -76,7 +76,15 @@ export class Context {
               : recentDynamics.data.cards[0].desc.dynamic_id
             : recentDynamics.data.cards[0].desc.dynamic_id
 
-          if (this.members[member.uid].recentDynaId !== 0 && this.members[member.uid].recentDynaId < recentId) {
+          if (!this.members[member.uid]) {
+            this.members[member.uid] = contextItemFactory({
+              recentDynaId: recentId
+            })
+          }
+
+          if (this.members[member.uid].recentDynaId < recentId) {
+            this.members[member.uid].recentDynaId = recentId
+
             if (recentDynamics.data.desc?.bvid) {
               const aid = JSON.parse(recentDynamics.data.cards)?.aid
               onVideoPost({
@@ -91,16 +99,6 @@ export class Context {
               })
             }
           }
-
-          this.members[member.uid].recentDynaId = recentId
-        } else {
-          this.members[member.uid] = contextItemFactory({
-            recentDynaId: recentDynamics.data.cards[1]?.desc
-            ? recentDynamics.data.cards[1].desc.dynamic_id - recentDynamics.data.cards[0].desc.dynamic_id > 0
-              ? recentDynamics.data.cards[1].desc.dynamic_id
-              : recentDynamics.data.cards[0].desc.dynamic_id
-            : recentDynamics.data.cards[0].desc.dynamic_id
-          })
         }
       } else {
         this.members[member.uid] = contextItemFactory({})
