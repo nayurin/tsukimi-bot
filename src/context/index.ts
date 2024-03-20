@@ -67,7 +67,7 @@ export class Context {
   async syncDynamicId (members: IMember[]) {
     for (const member of members) {
       const recentDynamics = (await getSpaceHistory(member.uid)).data
-  
+
       if (recentDynamics.data.cards?.length) {
         if (this.members[member.uid]) {
           const recentId = recentDynamics.data.cards[1]?.desc
@@ -82,24 +82,29 @@ export class Context {
             })
           }
 
-          if (this.members[member.uid].recentDynaId !== '0' && BigInt(this.members[member.uid].recentDynaId) < BigInt(recentId)) {
-            this.members[member.uid].recentDynaId = recentId
-            const recentDynamic = recentDynamics.data.cards.find(c => c.desc.dynamic_id_str === recentId)
-
-            if (recentDynamic?.desc.bvid) {
-              const aid = JSON.parse(recentDynamic.card)?.aid
-              onVideoPost({
-                aid,
-                member,
-                ctxitem: this.members[member.uid]
-              })
-            } else {
-              onDynaPost({
-                member,
-                ctxitem: this.members[member.uid]
-              })
+          if (this.members[member.uid].recentDynaId !== '0') {
+            if (BigInt(this.members[member.uid].recentDynaId) < BigInt(recentId)) {
+              this.members[member.uid].recentDynaId = recentId
+              const recentDynamic = recentDynamics.data.cards.find(c => c.desc.dynamic_id_str === recentId)
+  
+              if (recentDynamic?.desc.bvid) {
+                const aid = JSON.parse(recentDynamic.card)?.aid
+                onVideoPost({
+                  aid,
+                  member,
+                  ctxitem: this.members[member.uid]
+                })
+              } else {
+                onDynaPost({
+                  member,
+                  ctxitem: this.members[member.uid]
+                })
+              }
             }
+          } else {
+            this.members[member.uid].recentDynaId = recentId
           }
+
         }
       } else {
         console.log(`[${new Date().toLocaleString()}] ${member.uid}: 获取空间信息失败，等待下一次尝试`)
