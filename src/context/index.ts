@@ -59,7 +59,7 @@ export class Context {
           })
         }
       } else {
-        this.members[member.uid] = contextItemFactory({})
+        console.log(`[${new Date().toLocaleString()}] ${member.uid}: 获取直播间信息失败，等待下一次尝试`)
       }
     }
   }
@@ -102,7 +102,7 @@ export class Context {
           }
         }
       } else {
-        this.members[member.uid] = contextItemFactory({})
+        console.log(`[${new Date().toLocaleString()}] ${member.uid}: 获取空间信息失败，等待下一次尝试`)
       }
     }
   }
