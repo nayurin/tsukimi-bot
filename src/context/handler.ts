@@ -1,5 +1,6 @@
 import { Env, IContextItem, IMember } from '../types'
 import { loadConfig } from '../utils'
+import { logger } from '../utils/logger'
 import { $http } from '../utils/httpservice'
 
 const env: Env = loadConfig('.env')
@@ -25,7 +26,7 @@ export async function onLiveStart ({
   https://live.bilibili.com/${ctxitem.live.roomId}
   `
   sendGroupMsg(member.groups, message)
-  console.log(`[${new Date().toLocaleString()}] 发送了消息\n${message}`)
+  logger.info(`发送了消息\n${message}`, { label: 'onLiveStart' })
 }
 
 export async function onDynaPost ({
@@ -41,7 +42,7 @@ export async function onDynaPost ({
   https://t.bilibili.com/${ctxitem.recentDynaId}
   `
   sendGroupMsg(member.groups, message)
-  console.log(`[${new Date().toLocaleString()}] 发送了消息\n${message}`)
+  logger.info(`发送了消息\n${message}`, { label: 'onDynaPost' })
 }
 
 export async function onVideoPost ({
@@ -74,5 +75,5 @@ export async function onVideoPost ({
   ${shareInfo.data.link}
   `
   sendGroupMsg(member.groups, message)
-  console.log(`[${new Date().toLocaleString()}] 发送了消息\n${message}`)
+  logger.info(`发送了消息\n${message}`, { label: 'onVideoPost' })
 }

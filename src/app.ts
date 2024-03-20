@@ -1,5 +1,6 @@
 import { IMember, Env } from './types'
 import { loadConfig, asyncTimeout } from './utils'
+import { logger } from './utils/logger'
 import { Context } from './context'
 
 import { inspect } from 'node:util'
@@ -7,21 +8,21 @@ import { inspect } from 'node:util'
 const env: Env = loadConfig('.env')
 ;(async function () {
   const members: IMember[] = loadConfig('member.yml')
-  console.log(`[${new Date().toLocaleString()}] 加载成员列表，成功`)
+  logger.info('加载成员列表，成功', { label: 'app' })
 
   const context = new Context()
   
   await context.syncLiveStatus(members).then(() => {
-    console.log(`[${new Date().toLocaleString()}] 加载全部成员直播间状态，成功`)
+    logger.info('加载全部成员直播间状态，成功', { label: 'syncLiveStatus' })
   }).catch(err => {
-    console.log(`[${new Date().toLocaleString()}] 加载直播间状态失败，退出`)
+    logger.error('加载直播间状态失败，退出', { label: 'syncLiveStatus' })
     throw err
   })
   
   await context.syncDynamicId(members).then(() => {
-    console.log(`[${new Date().toLocaleString()}] 加载全部成员空间动态，成功`)
+    logger.info('加载全部成员空间动态，成功', { label: 'syncDynamicId' })
   }).catch(err => {
-    console.log(`[${new Date().toLocaleString()}] 加载成员空间动态失败，退出`)
+    logger.error('加载成员空间动态失败，退出', { label: 'syncDynamicId' })
     throw err
   })
   
@@ -29,18 +30,18 @@ const env: Env = loadConfig('.env')
     const members: IMember[] = loadConfig('./member.yml')
     
     await context.syncLiveStatus(members).then(() => {
-      console.log(`\n[${new Date().toLocaleString()}] live synced`)
+      logger.info('live synced', { label: 'syncLiveStatus' })
     }).catch(() => {
-      console.log(`\n[${new Date().toLocaleString()}] live synce failed, waiting for the next try`)
+      logger.error('live synce failed, waiting for the next try', { label: 'syncLiveStatus' })
     })
     
     await context.syncDynamicId(members).then(() => {
-      console.log(`[${new Date().toLocaleString()}] dynamic synced`)
+      logger.info('dynamic synced', { label: 'syncDynamicId' })
     }).catch(() => {
-      console.log(`\n[${new Date().toLocaleString()}] dynamic synce failed, waiting for the next try`)
+      logger.error('dynamic synce failed, waiting for the next try', { label: 'syncDynamicId' })
     })
     
-    console.log(inspect(context, false, 100, false))
+    logger.info(inspect(context, false, 100, false), { label: 'app' })
 
     await asyncTimeout(env.interval.request * 1000)
   }

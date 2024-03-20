@@ -1,4 +1,5 @@
 import { IMember, IContextItem } from '../types'
+import { logger } from '../utils/logger'
 import { getRoomStatusInfoByUids } from '../bilireq/live'
 import { getSpaceHistory } from '../bilireq/space'
 import { getUserInfo } from '../bilireq/user'
@@ -59,7 +60,7 @@ export class Context {
           })
         }
       } else {
-        console.log(`[${new Date().toLocaleString()}] ${member.uid}: 获取直播间信息失败，等待下一次尝试`)
+        logger.info(`${member.uid} - 获取直播间信息失败，等待下一次尝试`, { label: 'syncLiveStatus' })
       }
     }
   }
@@ -104,10 +105,9 @@ export class Context {
           } else {
             this.members[member.uid].recentDynaId = recentId
           }
-
         }
       } else {
-        console.log(`[${new Date().toLocaleString()}] ${member.uid}: 获取空间信息失败，等待下一次尝试`)
+        logger.info(`${member.uid} - 获取空间信息失败，等待下一次尝试`, { label: 'syncDynamicId' })
       }
     }
   }
