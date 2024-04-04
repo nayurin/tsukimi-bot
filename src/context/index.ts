@@ -4,6 +4,7 @@ import { getRoomStatusInfoByUids } from '../bilireq/live'
 import { getSpaceHistory } from '../bilireq/space'
 import { getUserInfo } from '../bilireq/user'
 import { onLiveStart, onDynaPost, onVideoPost } from './handler'
+import { inspect } from 'node:util'
 
 const contextItemFactory = (item: Partial<IContextItem>): IContextItem => {
   return {
@@ -60,7 +61,7 @@ export class Context {
           })
         }
       } else {
-        logger.debug(`${member.uid} - roomStatusInfo.data: ${roomStatusInfo.data}`)
+        logger.info(`${member.uid} - roomStatusInfo.data: \n${inspect(roomStatusInfo.data, false, 100, false)}\n`, { label: 'syncLiveStatus' })
         logger.info(`${member.uid} - 获取直播间信息失败，等待下一次尝试`, { label: 'syncLiveStatus' })
       }
     }
@@ -108,7 +109,7 @@ export class Context {
           }
         }
       } else {
-        logger.debug(`${member.uid} - recentDynamics.data: ${recentDynamics.data}`)
+        logger.info(`${member.uid} - recentDynamics.data:\n${inspect(recentDynamics.data, false, 100, false)}\n`, { label: 'syncDynamicId' })
         logger.info(`${member.uid} - 获取空间信息失败，等待下一次尝试`, { label: 'syncDynamicId' })
       }
     }

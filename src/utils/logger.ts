@@ -3,7 +3,7 @@ import 'winston-daily-rotate-file'
 import { resolve } from 'node:path'
 
 export const logger = winston.createLogger({
-  level: 'debug',
+  level: 'info',
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.printf(({ level, message, label, timestamp}) => `${timestamp} [${label}] ${level}: ${message}`)
