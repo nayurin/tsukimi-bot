@@ -60,6 +60,7 @@ export class Context {
           })
         }
       } else {
+        logger.debug(`${member.uid} - roomStatusInfo.data: ${roomStatusInfo.data}`)
         logger.info(`${member.uid} - 获取直播间信息失败，等待下一次尝试`, { label: 'syncLiveStatus' })
       }
     }
@@ -107,6 +108,7 @@ export class Context {
           }
         }
       } else {
+        logger.debug(`${member.uid} - recentDynamics.data: ${recentDynamics.data}`)
         logger.info(`${member.uid} - 获取空间信息失败，等待下一次尝试`, { label: 'syncDynamicId' })
       }
     }
